@@ -1,0 +1,16 @@
+<div class="d-flex flex-wrap">
+    <div class="m-5  p-4 rounded border  d-inline-block">
+        <h5>Prenotazioni</h5>
+        <hr>
+        <div *ngFor = "let prenotazio of prenotazioni" >
+            <div class="mt-2 p-2 rounded border" style="width: fit-content;" (click) = "selezionaPrenotazione(prenotazio)">
+                {{prenotazio.data}} - {{prenotazio.ora}} -> {{prenotazio.nome}} {{prenotazio.cognome}}
+            </div>
+        </div>
+    </div>
+
+        <div class="m-5 p-4 rounded border d-inline-block" *ngIf="selezionata">
+            <app-dettagli [prenotazione] = 'prenotazioneSelezionata'></app-dettagli>
+        </div>
+
+</div>
