@@ -2,48 +2,34 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Dati di esempio
-tasks = [
-    {
-        'id': 1,
-        'title': 'Fare la spesa',
-        'description': 'Comprare latte, uova, pane',
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': 'Imparare Flask',
-        'description': 'Fare un tutorial su Flask',
-        'done': False
-    }
-]
+appointments = []
 
-# Endpoint per ottenere tutte le attività
-@app.route('/tasks', methods=['GET'])
-def get_tasks():
-    return jsonify({'tasks': tasks})
+@app.route('/appointments', methods=['GET'])
+def get_appointments():
+    return jsonify({'appointments': appointments})
 
-# Endpoint per ottenere una specifica attività
-@app.route('/tasks/<int:task_id>', methods=['GET'])
-def get_task(task_id):
-    task = [task for task in tasks if task['id'] == task_id]
-    if len(task) == 0:
+@app.route('/appointments/<int:appointment_id>', methods=['GET'])
+def get_appointment(appointment_id):
+    appointment = [appointment for appointment in appointments if appointment['id'] == appointment_id]
+    if len(appointment) == 0:
         abort(404)
-    return jsonify({'task': task[0]})
+    return jsonify({'appointment': appointment[0]})
 
-# Endpoint per creare una nuova attività
-@app.route('/tasks', methods=['POST'])
-def create_task():
-    if not request.json or not 'title' in request.json:
+@app.route('/appointments', methods=['POST'])
+def create_appointment():
+    if not request.json or not all(key in request.json for key in ['nome', 'cognome', 'indirizzo', 'telefono', 'email', 'data', 'ora']):
         abort(400)
-    task = {
-        'id': tasks[-1]['id'] + 1,
-        'title': request.json['title'],
-        'description': request.json.get('description', ""),
-        'done': False
+    appointment = {
+        'nome': request.json['nome'],
+        'cognome': request.json['cognome'],
+        'indirizzo': request.json['indirizzo'],
+        'telefono': request.json['telefono'],
+        'email': request.json['email'],
+        'data': request.json['data'],
+        'ora': request.json['ora']
     }
-    tasks.append(task)
-    return jsonify({'task': task}), 201
+    appointments.append(appointment)
+    return jsonify({'appointment': appointment}), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
