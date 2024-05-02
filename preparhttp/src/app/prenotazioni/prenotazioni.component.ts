@@ -11,10 +11,16 @@ import { HttpClient } from '@angular/common/http';
 export class PrenotazioniComponent {
   selezionata: boolean = false;
   prenotazioneSelezionata!: Prenotazione;
-  observPrenotazione! : Observable<Prenotazione[]>; 
+  prenotazionePostata!: Prenotazione;
+  observPrenotazioneArray! : Observable<Prenotazione[]>; 
+  observPrenotazione!: Observable<Prenotazione>; 
   prenotazioni: Array<Prenotazione> = [];
 
-  constructor(public http: HttpClient) {this.makeTypedRequest() }
+  constructor(public http: HttpClient) {
+  
+      this.makeTypedRequest() 
+
+  }
 
   selezionaPrenotazione(prenotazio: Prenotazione) {
     this.selezionata = true;
@@ -24,8 +30,29 @@ export class PrenotazioniComponent {
   makeTypedRequest() : void
   {
     //observPrenotazione : Observable<Prenotazione[]>; va dichiarato tra gli attributi della classe
-    this.observPrenotazione = this.http.get<Prenotazione[]>('http://localhost:5000/appointments');
-    this.observPrenotazione.subscribe(data => {this.prenotazioni = data;});
+    this.observPrenotazioneArray = this.http.get<Prenotazione[]>('https://my-json-server.typicode.com/PolisenoRiccardo/fakeServer/prenotazioni');
+    this.observPrenotazioneArray.subscribe(prenotazioni => {this.prenotazioni = prenotazioni;});
   }
+
+  POSTozzo() : boolean
+  {
+    let postino = JSON.stringify({ 
+
+        "nome": "Luigi",
+        "cognome": "Campana",
+        "data": "52/11/2009",
+        "ora": "13.30",
+        "indirizzo": "Via Sacconi, 4",
+        "email": "blu@piccolo.com",
+        "telefono": "1923932203"
+      });
+    
+    const headers = {'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
+    this.observPrenotazione = this.http.post<Prenotazione>("https://jsonplaceholder.typicode.com/posts", postino, {headers});
+    this.observPrenotazione.subscribe(prenotazionePostata => {this.prenotazionePostata = prenotazionePostata;});
+    return false
+  }
+
+
 
 }
