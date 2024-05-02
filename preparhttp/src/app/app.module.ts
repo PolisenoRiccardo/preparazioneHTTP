@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { PrenotazioniComponent } from './prenotazioni/prenotazioni.component';
 import { DettagliComponent } from './dettagli/dettagli.component';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -12,7 +12,7 @@ import { DettagliComponent } from './dettagli/dettagli.component';
     DettagliComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

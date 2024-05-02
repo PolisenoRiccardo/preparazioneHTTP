@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Prenotazione } from './prenotazione.model';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-prenotazioni',
@@ -8,17 +10,22 @@ import { Prenotazione } from './prenotazione.model';
 })
 export class PrenotazioniComponent {
   selezionata: boolean = false;
-  prenotazioneSelezionata!: Prenotazione; 
-  prenotazioni: Array<Prenotazione> = [
-    new Prenotazione('Riccardo', 'Poliseno', 'via delle Grigne' ,'112','polipo6@gmail.com',  '08/01/2006', '9.30' ),
-    new Prenotazione('Riccardo', 'Poliseno', 'via delle Grigne' ,'112','polipo6@gmail.com',  '08/01/2006', '9.30' ),
-    new Prenotazione('Riccardo', 'Poliseno', 'via delle Grigne' ,'112','polipo6@gmail.com',  '08/01/2006', '9.30' )
-  ];
+  prenotazioneSelezionata!: Prenotazione;
+  observPrenotazione! : Observable<Prenotazione[]>; 
+  prenotazioni: Array<Prenotazione> = [];
 
-  constructor() {}
+  constructor(public http: HttpClient) {this.makeTypedRequest() }
 
   selezionaPrenotazione(prenotazio: Prenotazione) {
     this.selezionata = true;
     this.prenotazioneSelezionata = prenotazio;
   }
+
+  makeTypedRequest() : void
+  {
+    //observPrenotazione : Observable<Prenotazione[]>; va dichiarato tra gli attributi della classe
+    this.observPrenotazione = this.http.get<Prenotazione[]>('http://localhost:5000/appointments');
+    this.observPrenotazione.subscribe(data => {this.prenotazioni = data;});
+  }
+
 }
