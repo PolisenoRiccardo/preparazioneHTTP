@@ -17,9 +17,8 @@ export class PrenotazioniComponent {
   prenotazioni: Array<Prenotazione> = [];
 
   constructor(public http: HttpClient) {
-  
-      this.makeTypedRequest() 
-
+    for (let i = -1; i < this.prenotazioni.length; i++) {
+      this.makeTypedRequest() };
   }
 
   selezionaPrenotazione(prenotazio: Prenotazione) {
@@ -48,7 +47,7 @@ export class PrenotazioniComponent {
       });
     
     const headers = {'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
-    this.observPrenotazione = this.http.post<Prenotazione>("https://jsonplaceholder.typicode.com/posts", postino, {headers});
+    this.observPrenotazione = this.http.post<Prenotazione>("https://my-json-server.typicode.com/PolisenoRiccardo/fakeServer/prenotazioni", postino, {headers});
     this.observPrenotazione.subscribe(prenotazionePostata => {this.prenotazionePostata = prenotazionePostata;});
     return false
   }
