@@ -3,40 +3,40 @@
       <h3>Prenotazione</h3>
       <div class="form-group mt-1">
         <label for="nome">Nome:</label>
-        <input type="text" name="nome" class="form-control ">
+        <input type="text" name="nome" class="form-control" #newNome>
       </div>  
   
       <div class="form-group mt-1">
         <label for="Cognome">Cognome:</label>
-        <input type="text" name="Cognome" class="form-control ">
+        <input type="text" name="Cognome" class="form-control" #newCognome>
       </div> 
   
       <div class="form-group mt-1">
         <label for="Indirizzo">Indirizzo:</label>
-        <input type="text" name="Indirizzo" class="form-control ">
+        <input type="text" name="Indirizzo" class="form-control" #newIndirizzo>
       </div> 
   
       <div class="form-group mt-1">
         <label for="Telefono">Telefono:</label>
-        <input type="text" name="Telefono" class="form-control ">
+        <input type="text" name="Telefono" class="form-control" #newTelefono>
       </div> 
   
       <div class="form-group mt-1">
         <label for="mail">Email:</label>
-        <input type="text" name="mail" class="form-control ">
+        <input type="text" name="mail" class="form-control" #newMail>
       </div> 
   
       <div class="form-group mt-1">
         <label for="data">Data Prenotazione:</label>
-        <input type="text" name="data" class="form-control ">
+        <input type="text" name="data" class="form-control" #newData>
       </div> 
   
       <div class="form-group mt-1">
         <label for="ora">Ora Prenotazione:</label>
-        <input type="text" name="ora" class="form-control ">
+        <input type="text" name="ora" class="form-control" #newOra>
       </div> 
   
-      <button class="btn btn-primary mt-3" (click)="POSTozzo()">Prenota</button>
+      <button class="btn btn-primary mt-3" (click)="POSTozzo(newNome, newCognome, newIndirizzo, newTelefono, newMail, newData,newOra )">Prenota</button>
     </form>
   </div>
   

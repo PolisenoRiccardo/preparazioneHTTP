@@ -33,22 +33,17 @@ export class PrenotazioniComponent {
     this.observPrenotazioneArray.subscribe(prenotazioni => {this.prenotazioni = prenotazioni;});
   }
 
-  POSTozzo() : boolean
+  POSTozzo(nome: HTMLInputElement, cognome: HTMLInputElement,indirizzo: HTMLInputElement,telefono: HTMLInputElement,mail: HTMLInputElement,data: HTMLInputElement,ora: HTMLInputElement,) : boolean
   {
-    let postino = JSON.stringify({ 
-
-        "nome": "Luigi",
-        "cognome": "Campana",
-        "data": "52/11/2009",
-        "ora": "13.30",
-        "indirizzo": "Via Sacconi, 4",
-        "email": "blu@piccolo.com",
-        "telefono": "1923932203"
-      });
+    let prenotazione = new Prenotazione(nome.value, cognome.value, data.value, ora.value, indirizzo.value, mail.value, telefono.value)
+    let postino = JSON.stringify(
+      Object(prenotazione)
+    );
     
     const headers = {'Content-Type': 'application/json', 'My-Custom-Header': 'foobar' };
     this.observPrenotazione = this.http.post<Prenotazione>("https://my-json-server.typicode.com/PolisenoRiccardo/fakeServer/prenotazioni", postino, {headers});
     this.observPrenotazione.subscribe(prenotazionePostata => {this.prenotazionePostata = prenotazionePostata;});
+    this.prenotazioni.push(prenotazione)
     return false
   }
 
